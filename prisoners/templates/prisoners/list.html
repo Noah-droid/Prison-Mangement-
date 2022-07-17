@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %}Prisoners{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-sm-8">
+            <!-- <br />
+            <input id="searchbar" onkeyup="search_animal()" type="text"
+        name="search" placeholder="Search Prisoners by date, name, etc..">
+<br /> -->
+            <h1>Prisoners List</h1>
+            <p>Click on a prisoner's ID Number so as to update his/her
+            details or add a felony to him/her</p>
+            
+
+
+<script type="text/javascript">
+    function search_animal() {
+    let input = document.getElementById('searchbar').value
+    input=input.toLowerCase();
+    let x = document.getElementsByClassName('post');
+      
+    for (i = 0; i < x.length; i++) { 
+        if (!x[i].innerHTML.toLowerCase().includes(input)) {
+            x[i].style.display="none";
+        }
+        else {
+            x[i].style.display="list-item";                 
+        }
+    }
+}
+</script>
+<style type="text/css">
+    
+    #searchbar{
+    margin-left: 15%;
+    padding:15px;
+    border-radius: 10px;
+}
+
+input[type=text] {
+    width: 30%;
+    -webkit-transition: width 0.15s ease-in-out;
+    transition: width 0.15s ease-in-out;
+}
+
+/* When the input field gets focus,
+        change its width to 100% */
+input[type=text]:focus {
+    width: 70%;
+}
+
+#list{
+    font-size: 1.5em;
+    margin-left: 90px;
+}
+
+.post{
+display: list-item; 
+}
+</style>
+
+<br />
+            <table class="table table-bordered table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Id Number</th>
+                        <th scope="col">Picture</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Time Joined</th>
+                        <th scope="col">Next of Kin</th>
+                        <th scope="col">Relationship to Next of Kin</th>
+                        <th scope="col">Next of Kin Picture</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for prisoner in object_list %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'prisoners_detail' prisoner.id %}">
+                                {{ prisoner.id_number }}
+                            </a>
+                        </td>
+                        <td>  <a href="{{prisoner.pic.url}}"><img src="{{prisoner.pic.url}}" width='50' height="50" class="rounded-circle"></a></td>
+                        <td>{{ prisoner.first_name }}</td>
+                        <td>{{ prisoner.last_name }}</td>
+                        <td>{{prisoner.joined_on}}</td>
+                        <td>{{ prisoner.next_of_kin }}</td>
+                        <td>{{ prisoner.nxtofkin_relationship }}</td>
+                        <td><img src="{{ prisoner.nxtofkin_pic.url}}"width='50' height="50" class="rounded-circle"></td>
+                    </tr>
+                
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}
